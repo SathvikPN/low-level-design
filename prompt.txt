@@ -1,0 +1,21 @@
+lld prompt:
+
+Project Goal
+Design and implement a flexible, maintainable system that demonstrates mastery of low-level design principles, SOLID principles, and common design patterns.
+Context
+Low-level design (LLD) focuses on the actual implementation details of a system: classes, methods, relationships, and interactions. Unlike high-level system design which deals with architecture and components, LLD is about translating those architectural decisions into actual code that follows best practices.
+
+Core Learning Objectives
+
+1.Apply all SOLID principles consistently
+2. Implement appropriate design patterns for specific problems
+3. Create maintainable, testable, and extensible code
+4. Practice proper abstraction and separation of concerns
+5. Design clean interfaces and class hierarchies
+
+Language to be used:
+
+Java
+
+Output:
+Code the whole logic into a single file with proper comments
