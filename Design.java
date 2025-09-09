@@ -98,3 +98,79 @@ enum EnumSingleton {
         // Add any singleton logic here
     }
 }
+
+
+// # Factory Method --------------------------------------------------------------------------------
+// an interface for creating objects in a superclass, 
+// but allows subclasses to alter the type of objects that will be created.
+
+// naive 
+class NotificationService {
+    public void sendNotification(String type, String message) {
+        if (type.equals("EMAIL")) {
+            EmailNotification email = new EmailNotification();
+            email.send(message);
+        } else if (type.equals("SMS")) {
+            SMSNotification sms = new SMSNotification();
+            sms.send(message);
+        } else if (type.equals("Push")) {
+            PushNotification sms = new PushNotification();
+            sms.send(message);
+        } else if (type.equals("Slack")) {
+            SlackNotification sms = new SlackNotification();
+            sms.send(message);
+        } else if (type.equals("WhatsApp")) {
+            WhatsAppNotification sms = new WhatsAppNotification();
+            sms.send(message);
+        }
+    }
+}
+
+// factory method 
+// 1.product interface
+interface Notification {
+    public void send(String message);
+}
+// 2. concrete products 
+class EmailNotification implements Notification {
+    @Override
+    public void send(String message) {
+        System.out.println("Sending email: " + message);
+    }
+}
+// 3. abstract creator 
+abstract class NotificationCreator {
+    // Factory Method
+    public abstract Notification createNotification();
+
+    // Common logic using the factory method
+    public void send(String message) {
+        Notification notification = createNotification();
+        notification.send(message);
+    }
+}
+
+// 4. concrete creators 
+class EmailNotificationCreator extends NotificationCreator {
+    @Override
+    public Notification createNotification() {
+        return new EmailNotification();
+    }
+}
+
+// 5. client usage 
+public class FactoryMethodDemo {
+    public static void main(String[] args) {
+        NotificationCreator creator;
+
+        // Send Email
+        creator = new EmailNotificationCreator();
+        creator.send("Welcome to our platform!");
+
+        // Send SMS
+        creator = new SMSNotificationCreator();
+        creator.send("Your OTP is 123456");
+    }
+}
+
+
