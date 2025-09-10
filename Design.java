@@ -308,3 +308,177 @@ public class AppLauncher {
     }
 }
 
+
+// # 4 Builder 
+// lets you construct complex objects step-by-step, 
+// separating the construction logic from the final representation.
+
+// naive 
+class HttpRequestTelescoping {
+    private String url;
+    private String method;
+    private Map<String, String> headers;
+    private Map<String, String> queryParams;
+    private String body;
+    private int timeout;
+
+    public HttpRequestTelescoping(String url) {
+        this(url, "GET");
+    }
+
+    public HttpRequestTelescoping(String url, String method) {
+        this(url, method, null);
+    }
+
+    public HttpRequestTelescoping(String url, String method, Map<String, String> headers) {
+        this(url, method, headers, null);
+    }
+
+    public HttpRequestTelescoping(String url, String method, Map<String, String> headers,
+                                  Map<String, String> queryParams) {
+        this(url, method, headers, queryParams, null);
+    }
+
+    public HttpRequestTelescoping(String url, String method, Map<String, String> headers,
+                                  Map<String, String> queryParams, String body) {
+        this(url, method, headers, queryParams, body, 30000);
+    }
+
+    public HttpRequestTelescoping(String url, String method, Map<String, String> headers,
+                                  Map<String, String> queryParams, String body, int timeout) {
+        this.url = url;
+        this.method = method;
+        this.headers = headers == null ? new HashMap<>() : headers;
+        this.queryParams = queryParams == null ? new HashMap<>() : queryParams;
+        this.body = body;
+        this.timeout = timeout;
+
+        System.out.println("HttpRequest Created: URL=" + url +
+            ", Method=" + method +
+            ", Headers=" + this.headers.size() +
+            ", Params=" + this.queryParams.size() +
+            ", Body=" + (body != null) +
+            ", Timeout=" + timeout);
+    }
+
+    // Getters could be added here
+}
+
+// client 
+public class HttpAppTelescoping {
+    public static void main(String[] args) {
+        HttpRequestTelescoping req1 = new HttpRequestTelescoping("https://api.example.com/data");
+
+        HttpRequestTelescoping req2 = new HttpRequestTelescoping(
+            "https://api.example.com/submit",
+            "POST",
+            null,
+            null,
+            "{\"key\":\"value\"}"
+        );
+
+        HttpRequestTelescoping req3 = new HttpRequestTelescoping(
+            "https://api.example.com/config",
+            "PUT",
+            Map.of("X-API-Key", "secret"),
+            null,
+            "config_data",
+            5000
+        );
+    }
+}
+
+// Builder Method 
+
+// 4.1 product class 
+class HttpRequest {
+    // Required
+    private final String url;
+
+    // Optional
+    private final String method;
+    private final Map<String, String> headers;
+    private final Map<String, String> queryParams;
+    private final String body;
+    private final int timeout;
+
+    // Private constructor
+    private HttpRequest(Builder builder) {
+        this.url = builder.url;
+        this.method = builder.method;
+        this.headers = builder.headers;
+        this.queryParams = builder.queryParams;
+        this.body = builder.body;
+        this.timeout = builder.timeout;
+    }
+
+    // 4.1.2 Builder Class (nested in product class)
+    public static class Builder {
+        private final String url; // required
+        private String method = "GET";
+        private Map<String, String> headers = new HashMap<>();
+        private Map<String, String> queryParams = new HashMap<>();
+        private String body;
+        private int timeout = 30000;
+
+        public Builder(String url) {
+            this.url = url;
+        }
+
+        public Builder method(String method) {
+            this.method = method;
+            return this;
+        }
+
+        public Builder addHeader(String key, String value) {
+            this.headers.put(key, value);
+            return this;
+        }
+
+        public Builder addQueryParam(String key, String value) {
+            this.queryParams.put(key, value);
+            return this;
+        }
+
+        public Builder body(String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder timeout(int timeout) {
+            this.timeout = timeout;
+            return this;
+        }
+
+        public HttpRequest build() {
+            return new HttpRequest(this);
+        }
+    }
+}
+
+// 4.2 client usage 
+public class HttpAppBuilderPattern {
+    public static void main(String[] args) {
+        HttpRequest request1 = new HttpRequest.Builder("https://api.example.com/data")
+            .build();
+
+        HttpRequest request2 = new HttpRequest.Builder("https://api.example.com/submit")
+            .method("POST")
+            .body("{\"key\":\"value\"}")
+            .timeout(15000)
+            .build();
+
+        HttpRequest request3 = new HttpRequest.Builder("https://api.example.com/config")
+            .method("PUT")
+            .addHeader("X-API-Key", "secret")
+            .addQueryParam("env", "prod")
+            .body("config_payload")
+            .timeout(5000)
+            .build();
+
+        System.out.println(request1);
+        System.out.println(request2);
+        System.out.println(request3);
+    }
+}
+
