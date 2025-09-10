@@ -4,7 +4,7 @@ class Design {
     }
 }
 
-// # Singleton ----------------------------------------------------
+// #1 Singleton ----------------------------------------------------
 
 class LazySingleton {
     // The single instance, initially null
@@ -100,7 +100,7 @@ enum EnumSingleton {
 }
 
 
-// # Factory Method --------------------------------------------------------------------------------
+// #2 Factory Method --------------------------------------------------------------------------------
 // an interface for creating objects in a superclass, 
 // but allows subclasses to alter the type of objects that will be created.
 
@@ -127,18 +127,19 @@ class NotificationService {
 }
 
 // factory method 
-// 1.product interface
+
+// 2.1.product interface
 interface Notification {
     public void send(String message);
 }
-// 2. concrete products 
+// 2.2. concrete products 
 class EmailNotification implements Notification {
     @Override
     public void send(String message) {
         System.out.println("Sending email: " + message);
     }
 }
-// 3. abstract creator 
+// 2.3. abstract creator 
 abstract class NotificationCreator {
     // Factory Method
     public abstract Notification createNotification();
@@ -150,7 +151,7 @@ abstract class NotificationCreator {
     }
 }
 
-// 4. concrete creators 
+// 2.4. concrete creators 
 class EmailNotificationCreator extends NotificationCreator {
     @Override
     public Notification createNotification() {
@@ -158,7 +159,7 @@ class EmailNotificationCreator extends NotificationCreator {
     }
 }
 
-// 5. client usage 
+// 2.5. client usage 
 public class FactoryMethodDemo {
     public static void main(String[] args) {
         NotificationCreator creator;
@@ -173,4 +174,137 @@ public class FactoryMethodDemo {
     }
 }
 
+
+// #3 Abstract Factory 
+// The Abstract Factory Pattern provides an interface for creating families of related or dependent objects 
+// without specifying their concrete classes.
+
+// naive 
+public class App {
+    public static void main(String[] args) {
+        String os = System.getProperty("os.name");
+
+        if (os.contains("Windows")) {
+            WindowsButton button = new WindowsButton();
+            WindowsCheckbox checkbox = new WindowsCheckbox();
+            button.paint();
+            checkbox.paint();
+        } else if (os.contains("Mac")) {
+            MacOSButton button = new MacOSButton();
+            MacOSCheckbox checkbox = new MacOSCheckbox();
+            button.paint();
+            checkbox.paint();
+        }
+    }
+}
+
+
+// 3.1 abstract Factory Method
+// abstract product interface 
+interface Button {
+    void paint();
+    void onClick();
+}
+
+// 3.2 concrete product classes
+class WindowsButton implements Button {
+    @Override
+    public void paint() {
+        System.out.println("Painting a Windows-style button.");
+    }
+
+    @Override
+    public void onClick() {
+        System.out.println("Windows button clicked.");
+    }
+}
+
+class WindowsCheckbox implements Checkbox {
+    @Override
+    public void paint() {
+        System.out.println("Painting a Windows-style checkbox.");
+    }
+
+    @Override
+    public void onSelect() {
+        System.out.println("Windows checkbox selected.");
+    }
+}
+
+class MacOSButton implements Button {
+    @Override
+    public void paint() {
+        System.out.println("Painting a macOS-style button.");
+    }
+
+    @Override
+    public void onClick() {
+        System.out.println("MacOS button clicked.");
+    }
+}
+
+// 3.3 abstract factory 
+interface GUIFactory {
+    Button createButton();
+    Checkbox createCheckbox();
+}
+
+// 3.4 concrete factories
+class WindowsFactory implements GUIFactory {
+    @Override
+    public Button createButton() {
+        return new WindowsButton();
+    }
+
+    @Override
+    public Checkbox createCheckbox() {
+        return new WindowsCheckbox();
+    }
+}
+
+class MacOSFactory implements GUIFactory {
+    @Override
+    public Button createButton() {
+        return new MacOSButton();
+    }
+
+    @Override
+    public Checkbox createCheckbox() {
+        return new MacOSCheckbox();
+    }
+}
+
+// 3.5 client usage - abstract interfaces only 
+class Application {
+    private final Button button;
+    private final Checkbox checkbox;
+
+    public Application(GUIFactory factory) {
+        this.button = factory.createButton();
+        this.checkbox = factory.createCheckbox();
+    }
+
+    public void renderUI() {
+        button.paint();
+        checkbox.paint();
+    }
+}
+
+// 3.6 application entry point 
+public class AppLauncher {
+    public static void main(String[] args) {
+        // Simulate platform detection
+        String os = System.getProperty("os.name");
+        GUIFactory factory;
+
+        if (os.contains("Windows")) {
+            factory = new WindowsFactory();
+        } else {
+            factory = new MacOSFactory();
+        }
+
+        Application app = new Application(factory);
+        app.renderUI();
+    }
+}
 
