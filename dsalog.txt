@@ -1,0 +1,309 @@
+Algorithms: 
+1. Design (well known technique + problem insight)
+2. Implementation (a programming language in depth)
+
+Mathematics {
+    - modular arithmetic 
+    - Progressions {
+        1 + 2 + ....n             == n(n+1) / 2
+        1*1 + 2*2 + 3*3 ... n*n   == n(n+1)(2n+1) / 6
+        a + a+x + a+2x .... + b   == n(a+b) / 2
+
+        a + ak + a(k^2) + a(k^3) .... + b   == (bk-a) / (k-1)
+        1 + 2 + 4 + 8 ... 2^n               == 2^(n+1) - 1
+
+        logk(x) ==> steps to divide x by k to reach 1
+    }
+}
+
+Time Complexity {
+    loop, phases, recursion
+}
+
+sorting {
+    Comparison vs Non-comparsion based sorting  - https://chatgpt.com/s/t_68b9981d1ed48191895f3b4c6c4ff7c9
+    1.swapping consecutive inversions (out-of-order) : bubble sort O(n^2)
+    2.recursion and merge : merge sort O(nlogn) https://leetcode.com/problems/sort-an-array/solutions/7154842/classic-merge-sort-by-spnio-t5as/
+    3.small value range (alphabets): count sort O(n) https://leetcode.com/problems/sort-colors/
+    4.large value range but less digits/chars for each elem : radix sort 
+    WHEN TO USE RADIX sort == https://chatgpt.com/s/t_68b9981d1ed48191895f3b4c6c4ff7c9
+
+    sort(v.begin(), v.end())   // increasing
+    sort(v.rbegin(), v.rend()) // decreasing
+    sort(a, a+n)               // array
+
+    // inline comparator function aka lambda function 
+    sort(v.begin(), v.end(), [](int a, int b) {
+        return a > b;
+    });
+
+    // sorted array - pointers to first occurence of x and last occurence of x if exist else out-of-range pointer 
+    auto a = lower_bound(v.begin(), v.end(), x)
+    auto b = upper_bound(v.begin(), v.end(), x)
+    auto r = equal_range(v.begin(), v.end(), x)
+    b - a == count(x) == r.second - r.first 
+
+    // Kth largest-smallest element in array without Sorting full array
+    Quick Select Algorithm https://leetcode.com/problems/kth-largest-element-in-an-array/solutions/7155102/quick-select-algorithm-pivot-idx-by-spni-ijf7/
+}
+
+binary_search {
+    - 2D Matrix search https://leetcode.com/problems/search-a-2d-matrix/solutions/7157273/nested-binary-search-for-row-and-positio-o5hr/
+    - 2D Matrix search 2 https://leetcode.com/problems/search-a-2d-matrix-ii/description/
+}
+
+data_structures {
+    vector {
+        vsum = accumulate(v.begin(), v.end(), 0);
+        vmax = *max_element(v.begin(), v.end());  // iterator <- max_element()
+        vsortDesc => sort(v.begin(), v.end(), greater<int>());
+        vsortDesc => sort(v.begin(), v.end(), [](int a, int b) { return a > b; });
+
+        vector<int> v(5, 0); // {0,0,0,0,0}
+        v.push_back(x); // insert 
+        v.insert(v.end(), {1,2,3}); // extend 
+        v.pop_back(); // remove
+        v.back();  // view
+        v.resize(len); // reset length 
+        v.assign(len, 0); // reset len and init value 
+
+
+        for(auto row:matrix)  // copy row but donot update matrix  
+        for(auto &row:matrix) // iterates directly matrix elem
+
+        v.clear()
+
+        int dp[m+1][n+1]; COMPILE ERROR 
+        determined at runtime based on the input strings' lengths, making dp a Variable Length Array. VLAs are a non-standard feature that some compilers (like Clang and GCC) support as an extension, but they are not part of the C++ standard and can cause issues
+
+        vector<vector<int>> dp(m+1, vector<int>(n+1));
+    }
+
+    string {  
+
+        string s = "hi" // s[2] out-of-bound in cpp but '\0' in c
+        string s(1, char(x));  // string s = string(char(x)); ==> string(size) not-intended
+        substr(pos=0, len=npos)   // npos: until end of string s.substr(1, 3) startIdx=1 len=3
+        min(int(1), (int)strs[i].size())  // size returns size_t type mismatched with int comparison
+        zstring.append(v.begin(), v.end());  // extend string with vector of chars
+    }
+
+    set {
+        set<int> s;
+        s.insert(5); s.insert(5)
+        s.count(5) == 1
+        s.erase(5);
+        for(auto &x:s)
+
+        unordered_set<int> us; // doesnot support iterators of lower_bound(x), upper_bound(x)
+
+        multiset<int> ms;
+        ms.insert(5); ms.insert(5);
+        ms.count(5) == 2
+        ms.erase(5) // removes all occurences
+        ms.erase(ms.find(5)) // removes only 1elem 
+    }
+
+    map {
+        map<string,int> mp;
+        mp["a"] = 1;
+        mp["b"] // if requested, always adds with default value even if not inserted
+        mp.count("b") == 0   // if had used mp["b"] before, key auto inserted & returns 1
+        for(auto &x:mp) x.first (key) x.second(value)
+    }
+
+    iterators {
+        for(auto it = set.begin(); it != set.end(); it++) cout << *it;
+    }
+
+    bitset {
+        bitset<6> bs(string("101010")) 
+        bs[0] = 0 && bs[5] = 1  // right-to-left 
+        bs.count() = 3 == set bits count 
+
+        const int bits = sizeof(n) * 8;
+        bitset<bits> abinaryOf(n);
+        cout << binary.to_string()
+
+        bs1 & bs2  // direct bit operations
+    }
+
+    deque {
+        deque<int> d;
+        d.push_back(x), d.pop_back()
+        d.push_front(x), d.pop_front()
+    }
+
+    stack {
+        stack<int> st;
+        st.push(x)
+        st.top()
+        st.pop()
+    }
+
+    queue {
+        queue<int> q; 
+        q.push(x)
+        q.front()
+        q.pop()
+    }
+
+    priority_queue {
+        // uses heap datastructure ==> smaller const factor for ops == simpler than set implementation of balanced binary tree 
+        priority_queue<int> pq; // default decreasing order 
+        pq.push(2), pq.push(3), pq.push(1)
+        pq.top() == 3
+        pq.pop()
+    }
+
+    matrix {
+        - correctness of search algo https://cs.stackexchange.com/questions/98575/proving-correctness-of-search-algorithms
+    }
+}
+
+complete_search {
+    - recursion 
+    - backtracking
+    - nested lambda function 
+
+    - subsets https://leetcode.com/problems/subsets/solutions/7155763/recursion-decision-tree-includeexclude-c-zgcv/
+    - subsets unique https://leetcode.com/problems/subsets-ii/submissions/1759609755/
+    - permutations https://leetcode.com/problems/permutations/solutions/7156058/recursion-choose-element-for-current-idx-kdte/
+    - permuattions unique https://leetcode.com/problems/permutations-ii/solutions/7156288/explained-logic-to-skip-duplicates-sorti-ssvv/
+    - N Queens https://leetcode.com/problems/n-queens/solutions/7156984/backtracking-and-pruning-search-tree-by-0npvw/
+    - N Queens unique count https://leetcode.com/problems/n-queens-ii/solutions/7157047/backtrack-with-pruning-by-spnio-2dz1/
+    - count paths in matrix from top left to bottom right with each cell visited once 
+}  
+
+greedy_algorithms {
+    scheduling
+    tasks and deadlines
+    minimize sums 
+    huffman coding & data compression
+}
+
+dynamic_programming {
+    - coin change 
+    - coin change combination (unique) https://leetcode.com/problems/coin-change-ii/solutions/7158583/dp-beginners-mistake-why-outer-loop-has-4bkw0/
+    - (std) longest increasing subsequence https://leetcode.com/problems/longest-increasing-subsequence/solutions/7159134/1dp-subsequence-ending-at-idx-by-spnio-ho66/
+    - min path sum in grid https://leetcode.com/problems/minimum-path-sum/solutions/7162203/2dp-classic-bestleft-top-by-spnio-krf2/
+    - unique path https://leetcode.com/problems/unique-paths/solutions/7162251/2dp-classic-sumlefttop-by-spnio-ndvb/
+    - unique path with obstacle https://leetcode.com/problems/unique-paths-ii/solutions/7162297/2dp-classic-zero-path-if-cell-is-obstacl-igmz/
+    - (std) edit distance https://leetcode.com/problems/edit-distance/solutions/7166279/2dp-recurrence-by-spnio-of2h/
+    - (std) longest common subsequence https://leetcode.com/problems/longest-common-subsequence/solutions/7166578/2dp-classic-by-spnio-dw6f/
+    - delete ops to match string https://leetcode.com/problems/delete-operation-for-two-strings/solutions/7167461/2dp-bottom-up-easy-read-by-spnio-jjs3/
+    - min ascii delete sum to match string https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/solutions/7169443/2dp-memoization-bottom-up-explained-by-s-cf16/
+    - knapsack problem
+    - count tilings 
+    - scheduling OS (eject or spawn process) awareOfSecret https://leetcode.com/problems/number-of-people-aware-of-a-secret/description/?envType=daily-question&envId=2025-09-09
+}
+
+amortized_analysis {
+    - 3Sum https://leetcode.com/problems/3sum/solutions/7169607/2p-sort-to-skip-duplicates-by-spnio-q32a/
+}
+
+range_queries {
+    - Range Sum Query 1D (immutable) prefix Sum 1D  https://leetcode.com/problems/range-sum-query-immutable/solutions/7170269/prefix-sum-by-spnio-7ykk/
+    - Range Sum Query 2D (immutable) prefix sum 2D  https://leetcode.com/problems/range-sum-query-2d-immutable/solutions/7170439/2d-prefixsum-easy-visualization-by-spnio-zqrx/
+    - Range Minimum Query (immutable) sparse table 
+    - Range Sum Query 1D (mutable) Binary Indexed Tree https://leetcode.com/problems/range-sum-query-mutable/solutions/7173053/binary-indexed-tree-aka-fenwick-tree-for-ts7k/
+
+    Binary Indexed Tree aka Fenwick Tree - RSQ 
+    Segment Tree - RSQ, RMQ & more 
+    Index Compression - Mapping valueSet to contiguous numbers starting 0/1
+    Range Update - prefixDifference Array (similar to prefixSum)
+}
+
+bit_manipulation {
+    Negative as 2s Compliment : flip all bits and add 1  (MSB bit 1negative 0positive)
+    overflow: int -43 == unsigned int 2^32 - 43
+    int (2^31 - 1)++ == -2^31
+    uint (2^32 - 1)++ == 0 
+
+    reverse integer overflow: https://leetcode.com/problems/reverse-integer/solutions/7178042/explained-negative-overflow-and-last-dig-hr9l/
+    check bits alternate strictly: https://leetcode.com/problems/binary-number-with-alternating-bits/solutions/7179303/bit-manipulation-explained-xor-add1-and-pd2yx/
+    Bit Operations {
+        AND(&)
+        -- odd (x&1 == 1)
+        -- (x / 2^k) == 0  ==>  x & (2^k - 1) == 0
+
+        OR(|)
+        -- a |= 1 ==> a | 1
+
+        XOR(^)
+        -- a ^ b ==> setBits only where a and b differs 
+
+        NOT(~)
+        -- ~x = -x-1  (bcz ~x inverted bits. -x = inverted(x)+1  aka 2s compliment)
+    } 
+
+    Bit Shifts {
+        x << k  ==> (x * 2^k)
+        x >> k  ==> (x / 2^k)
+
+        set-kth-bit    x |  (1<<k)
+        clear-kth-bit  x & ~(1<<k)
+        invert-kth-bit x ^  (1<<K)
+
+        MSB-LSB-set-clear: https://leetcode.com/problems/reverse-bits/solutions/7177960/2pointers-setclear-bits-via-bit-operatio-7bqi/
+
+        check-if-kth-bit-set  (x>>k) & 1    // better rightshift x than leftshifting 1 which may overflow
+
+        postive-number-power-of-2 iff  x&(x-1) == 0 
+        power-2: https://leetcode.com/problems/power-of-two/solutions/7176417/bitwise-analysis-by-spnio-nldy/
+        power-3: https://leetcode.com/problems/power-of-three/solutions/7176479/is-max-power-of-3-for-int-perfectly-divi-b2x3/
+        power-4: https://leetcode.com/problems/power-of-four/solutions/7176553/modular-arithmetic-by-spnio-nf33/
+
+    }
+
+    set_representation {
+        set{0,1,2 ...n-1} == n-bit number 
+        set{2,5,6} == (1<<2) | (1<<5) | (1<<6)
+
+        __builtin_clz(x) // count zeroes at beginning
+        __builtin_ctz(x) // zeros at end 
+        __builtin_popcount(x) // 1s in binary number 
+
+        intersection: a & b 
+        union:        a | b 
+
+        subset_iteration {
+            set{0,1,2 ... n-1}
+
+            all subsets {
+                for(int b=0; b<(1<<n); ++b)
+            }
+
+            subsets with exact k elements {
+                for(int b=0; b<(1<<n); ++b) {
+                    if(__builtin_popcount(b) == k)
+                }
+            }
+
+            subsets of set x {
+                int b = 0;
+                do {
+                    process subset b 
+                } while(b = (b-x) & x);
+            }
+        }
+
+        bit_optimisation {
+            hamming distance: hamming(string a, string b) len(a)==len(b)=k && count indexes where bit differs
+            if(k<=32) store as numbers, __builtin_popcount(a^b)
+
+            hamming dist: https://leetcode.com/problems/hamming-distance/solutions/7177192/xor-and-setbit-count-by-spnio-a4b3/
+            total hamming dist: https://leetcode.com/problems/total-hamming-distance/solutions/7177297/on-runtime-contribution-of-each-bit-idx-xvlzr/
+            hamming weight: https://leetcode.com/problems/number-of-1-bits/solutions/7177235/bit-count-by-right-shift-instead-of-left-3tsf/
+
+        }
+
+    }
+}
+
+CSES Problems in Leetcode {
+    - Max subarray https://leetcode.com/problems/maximum-subarray/solutions/7154772/extend-vs-new-subarray-by-spnio-zjob/
+    - subsets unique https://leetcode.com/problems/subsets-ii/submissions/1759609755/
+    - permutations https://leetcode.com/problems/permutations/solutions/7156058/recursion-choose-element-for-current-idx-kdte/
+    - N Queens https://leetcode.com/problems/n-queens-ii/solutions/7157047/backtrack-with-pruning-by-spnio-2dz1/  
+}   
