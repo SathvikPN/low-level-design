@@ -4,7 +4,7 @@ class Design {
     }
 }
 
-// #1 Singleton ----------------------------------------------------
+// # 1.Singleton ####################################################################################################
 
 class LazySingleton {
     // The single instance, initially null
@@ -100,7 +100,18 @@ enum EnumSingleton {
 }
 
 
-// #2 Factory Method --------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+// # 2.Factory Method ####################################################################################################
 // an interface for creating objects in a superclass, 
 // but allows subclasses to alter the type of objects that will be created.
 
@@ -175,7 +186,8 @@ public class FactoryMethodDemo {
 }
 
 
-// #3 Abstract Factory 
+// # 3.Abstract Factory ####################################################################################################
+
 // The Abstract Factory Pattern provides an interface for creating families of related or dependent objects 
 // without specifying their concrete classes.
 
@@ -309,7 +321,8 @@ public class AppLauncher {
 }
 
 
-// # 4 Builder 
+// # 4.Builder ####################################################################################################
+
 // lets you construct complex objects step-by-step, 
 // separating the construction logic from the final representation.
 
@@ -481,4 +494,126 @@ public class HttpAppBuilderPattern {
         System.out.println(request3);
     }
 }
+
+
+// # 5.Adapter (structural) ####################################################################################################
+
+// 5.1 interface 
+interface PaymentProcessor {
+    void processPayment(double amount, String currency);
+    boolean isPaymentSuccessful();
+    String getTransactionId();
+}
+
+// 5.2 concrete product (modern)
+class InHousePaymentProcessor implements PaymentProcessor {
+    private String transactionId;
+    private boolean isPaymentSuccessful;
+
+    @Override
+    public void processPayment(double amount, String currency) {
+        transactionId = "TXN_" + System.currentTimeMillis();
+        isPaymentSuccessful = true;
+    }
+
+    @Override
+    public boolean isPaymentSuccessful() {
+        return isPaymentSuccessful;
+    }
+
+    @Override
+    public String getTransactionId() {
+        return transactionId;
+    }
+}
+
+// 5.3 expected usage
+class CheckoutService {
+    private PaymentProcessor paymentProcessor;
+
+    public CheckoutService(PaymentProcessor paymentProcessor) {
+        this.paymentProcessor = paymentProcessor;
+    }
+
+    public void checkout(double amount, String currency) {
+        paymentProcessor.processPayment(amount, currency);
+        if (paymentProcessor.isPaymentSuccessful()) {
+            System.out.println("CheckoutService: Order successful! Transaction ID: " 
+                               + paymentProcessor.getTransactionId());
+        } else {
+            System.out.println("CheckoutService: Order failed. Payment was not successful.");
+        }
+    }
+}
+
+// 5.4 legacy mismatched product that requires adaptation to payment processor
+class LegacyGateway {
+    private long transactionReference;
+    private boolean isPaymentSuccessful;
+
+    public void executeTransaction(double totalAmount, String currency) {
+        System.out.println("LegacyGateway: Executing transaction for " 
+                           + currency + " " + totalAmount);
+        transactionReference = System.nanoTime();
+        isPaymentSuccessful = true;
+        System.out.println("LegacyGateway: Transaction executed successfully. Txn ID: " 
+                           + transactionReference);
+    }
+
+    public boolean checkStatus(long transactionReference) {
+        System.out.println("LegacyGateway: Checking status for ref: " + transactionReference);
+        return isPaymentSuccessful;
+    }
+
+    public long getReferenceNumber() {
+        return transactionReference;
+    }
+}
+
+// 5.5 Adapter to adapt legacy processor to payment processor interface
+class LegacyGatewayAdapter implements PaymentProcessor {
+    private final LegacyGateway legacyGateway;
+    private long currentRef;
+
+    public LegacyGatewayAdapter(LegacyGateway legacyGateway) {
+        this.legacyGateway = legacyGateway;
+    }
+
+    @Override
+    public void processPayment(double amount, String currency) {
+        System.out.println("Adapter: Translating processPayment() for " + amount + " " + currency);
+        legacyGateway.executeTransaction(amount, currency);
+        currentRef = legacyGateway.getReferenceNumber(); // Store for later use
+    }
+
+    @Override
+    public boolean isPaymentSuccessful() {
+        return legacyGateway.checkStatus(currentRef);
+    }
+
+    @Override
+    public String getTransactionId() {
+        return "LEGACY_TXN_" + currentRef;
+    }
+}
+
+// 5.6 client usage unchanged
+public class ECommerceAppV2 {
+    public static void main(String[] args) {
+        // Modern processor
+        PaymentProcessor processor = new InHousePaymentProcessor();
+        CheckoutService modernCheckout = new CheckoutService(processor);
+        System.out.println("--- Using Modern Processor ---");
+        modernCheckout.checkout(199.99, "USD");
+
+        // Legacy gateway through adapter
+        System.out.println("\n--- Using Legacy Gateway via Adapter ---");
+        LegacyGateway legacy = new LegacyGateway();
+        processor = new LegacyGatewayAdapter(legacy);
+        CheckoutService legacyCheckout = new CheckoutService(processor);
+        legacyCheckout.checkout(75.50, "USD");
+    }
+}
+
+
 
