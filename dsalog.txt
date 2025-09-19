@@ -18,6 +18,17 @@ Mathematics {
 
 Time Complexity {
     loop, phases, recursion
+    | Complexity     | Safe `n` (approx) | Why?                            |
+    | -------------- | ----------------- | ------------------------------- |
+    | **O(log n)**   | `n` up to 10¹⁸+   | Extremely cheap, log(10¹⁸) ≈ 60 |
+    | **O(√n)**      | `n` up to 10¹⁶    | √(10¹⁶) = 10⁸ operations        |
+    | **O(n)**       | `n` up to 10⁸     | Direct linear scan              |
+    | **O(n log n)** | `n` up to 10⁶     | 10⁶ × log₂(10⁶) ≈ 2×10⁷ ops     |
+    | **O(n²)**      | `n` up to 10⁴     | 10⁴² = 10⁸ ops                  |
+    | **O(n³)**      | `n` up to 500     | 500³ ≈ 1.25×10⁸ ops             |
+    | **O(2ⁿ)**      | `n` up to 20–25   | 2²⁰ ≈ 10⁶, 2²⁵ ≈ 3×10⁷          |
+    | **O(n!)**      | `n` up to 10–11   | 10! ≈ 3.6×10⁶, 11! ≈ 4×10⁷      |
+
 }
 
 sorting {
