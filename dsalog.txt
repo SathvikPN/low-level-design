@@ -97,6 +97,9 @@ data_structures {
         substr(pos=0, len=npos)   // npos: until end of string s.substr(1, 3) startIdx=1 len=3
         min(int(1), (int)strs[i].size())  // size returns size_t type mismatched with int comparison
         zstring.append(v.begin(), v.end());  // extend string with vector of chars
+
+        stringstream (string concatenation of vectorized string)
+        https://leetcode.com/problems/simplify-path/solutions/7206309/simulate-with-stringstream-efficiency-by-5ezx/
     }
 
     set {
@@ -184,6 +187,8 @@ complete_search {
     - N Queens https://leetcode.com/problems/n-queens/solutions/7156984/backtracking-and-pruning-search-tree-by-0npvw/
     - N Queens unique count https://leetcode.com/problems/n-queens-ii/solutions/7157047/backtrack-with-pruning-by-spnio-2dz1/
     - count paths in matrix from top left to bottom right with each cell visited once 
+
+    - palindrome partition https://leetcode.com/problems/palindrome-partitioning/solutions/7206104/simple-brute-force-backtracking-whilst-p-uupu/
 }  
 
 greedy_algorithms {
