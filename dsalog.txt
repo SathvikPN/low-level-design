@@ -331,15 +331,13 @@ graph_basics {
 
     in-out-degrees https://leetcode.com/problems/find-the-town-judge/solutions/7208361/3-approaches-graph-simulation-out-in-deg-hefp/
 
-    graph_traversals {
-        1. Depth-first-search DFS 
-        2. Breadth-first-search BFS
+    graph_traversals - DFS, BFS (depth, breadth first search)
 
-        applications:
-        - connectivity check https://leetcode.com/problems/find-if-path-exists-in-graph/solutions/7208432/std-graph-traversals-dfs-and-bfs-by-spni-ci48/
-        - bipartite check https://leetcode.com/problems/is-graph-bipartite/solutions/7208912/bipartite-simulation-via-graph-traversal-jvn8/
-
-    }
+    applications:
+    - connectivity check https://leetcode.com/problems/find-if-path-exists-in-graph/solutions/7208432/std-graph-traversals-dfs-and-bfs-by-spni-ci48/
+    - bipartite check https://leetcode.com/problems/is-graph-bipartite/solutions/7208912/bipartite-simulation-via-graph-traversal-jvn8/
+    (nodes can be partitioned into two independent sets A and B such that every edge in the graph connects a node in set A and a node in set B)
+    - DAG traversal (directed acyclic graph DFS, no need to track visited nodes) https://leetcode.com/problems/all-paths-from-source-to-target/solutions/7209027/dag-traversal-via-dfs-by-spnio-ze42/
 
 }
 
