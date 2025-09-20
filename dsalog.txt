@@ -119,7 +119,7 @@ data_structures {
     }
 
     map {
-        map<string,int> mp;
+        map<string,int> mp;  unordered_map
         mp["a"] = 1;
         mp["b"] // if requested, always adds with default value even if not inserted
         mp.count("b") == 0   // if had used mp["b"] before, key auto inserted & returns 1
@@ -313,8 +313,34 @@ bit_manipulation {
             hamming weight: https://leetcode.com/problems/number-of-1-bits/solutions/7177235/bit-count-by-right-shift-instead-of-left-3tsf/
 
         }
+    }
+}
+
+graph_basics {
+    nodes, edges, path, directed graph, weighted edges, connected part (component),
+    neighbours, degrees(in,out, sum = 2*edges), bipartite (2-coloring), 
+    simple(no edge start & end at same node, no multiple edges between 2node)
+    
+    tree = graph with unique paht b/w any 2 nodes (n nodes, n-1 edges)
+
+    graph_representations {
+        1. Adjacency List:     adj[1].push_back({2, 9})  1--(9)-->2 (nodes:1->2 with weight 9)
+        2. Adjacency Matrix:   adj[1][2] = 9
+        3. Edge List:          edges.push_back({1,2})
+    }
+
+    in-out-degrees https://leetcode.com/problems/find-the-town-judge/solutions/7208361/3-approaches-graph-simulation-out-in-deg-hefp/
+
+    graph_traversals {
+        1. Depth-first-search DFS 
+        2. Breadth-first-search BFS
+
+        applications:
+        - connectivity check https://leetcode.com/problems/find-if-path-exists-in-graph/solutions/7208432/std-graph-traversals-dfs-and-bfs-by-spni-ci48/
+        - bipartite check https://leetcode.com/problems/is-graph-bipartite/solutions/7208912/bipartite-simulation-via-graph-traversal-jvn8/
 
     }
+
 }
 
 CSES Problems in Leetcode {
