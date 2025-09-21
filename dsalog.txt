@@ -90,6 +90,16 @@ data_structures {
         vector<vector<int>> dp(m+1, vector<int>(n+1));
     }
 
+    tuples & pairs {
+        container to hold values of different types
+        pair<int,char> p(1, 'a');             //  p.first, p.second 
+        tuple<int,string,int>  t(1,"hi",2)    // get<0>(t)
+
+        C++ 17 later, structured binding
+        auto [pfirst, psecond] = p
+        auto [tfirst, tsecond, tthird] = t
+    }
+
     string {  
 
         string s = "hi" // s[2] out-of-bound in cpp but '\0' in c
