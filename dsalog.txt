@@ -105,6 +105,8 @@ data_structures {
         string s = "hi" // s[2] out-of-bound in cpp but '\0' in c
         string s(1, char(x));  // string s = string(char(x)); ==> string(size) not-intended
         substr(pos=0, len=npos)   // npos: until end of string s.substr(1, 3) startIdx=1 len=3
+        if (astring.compare(0,k,word) == 0) // string comparison (no temporary string)
+        if (astring.rfind(word, 0) == 0)  // reverse search last found prefix word starting idx in astring
         min(int(1), (int)strs[i].size())  // size returns size_t type mismatched with int comparison
         s.append(v.begin(), v.end());  // extend string with vector of chars
 
@@ -227,7 +229,10 @@ dynamic_programming {
     - knapsack problem
     - count tilings 
     - scheduling OS (eject or spawn process) awareOfSecret https://leetcode.com/problems/number-of-people-aware-of-a-secret/description/?envType=daily-question&envId=2025-09-09
-}
+
+    DP starters:
+    - https://leetcode.com/problems/min-cost-climbing-stairs/solutions/7214436/dynamic-programming-basics-space-optimiz-52hv/
+}   - max repeating substrings https://leetcode.com/problems/maximum-repeating-substring/solutions/7214954/1dp-concepts-the-dp-way-by-spnio-2ztz/
 
 amortized_analysis {
     - 3Sum https://leetcode.com/problems/3sum/solutions/7169607/2p-sort-to-skip-duplicates-by-spnio-q32a/
