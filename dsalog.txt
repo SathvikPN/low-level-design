@@ -199,6 +199,7 @@ complete_search {
 
     - subsets https://leetcode.com/problems/subsets/solutions/7155763/recursion-decision-tree-includeexclude-c-zgcv/
     - subsets unique https://leetcode.com/problems/subsets-ii/submissions/1759609755/
+    - unique backtrack (subsequence unique vs subset unique) https://leetcode.com/problems/non-decreasing-subsequences/solutions/7220952/backtrack-with-used_set-for-current-recu-e8mv/
     - permutations https://leetcode.com/problems/permutations/solutions/7156058/recursion-choose-element-for-current-idx-kdte/
     - permuattions unique https://leetcode.com/problems/permutations-ii/solutions/7156288/explained-logic-to-skip-duplicates-sorti-ssvv/
     - N Queens https://leetcode.com/problems/n-queens/solutions/7156984/backtracking-and-pruning-search-tree-by-0npvw/
@@ -206,6 +207,7 @@ complete_search {
     - count paths in matrix from top left to bottom right with each cell visited once 
 
     - palindrome partition https://leetcode.com/problems/palindrome-partitioning/solutions/7206104/simple-brute-force-backtracking-whilst-p-uupu/
+    
 }  
 
 greedy_algorithms {
@@ -361,6 +363,29 @@ graph_basics {
     (complete graph node-relation-edges, tuple/pair binding auto keyword, degreeSum processing)
 
     cyclic, min-distance, curr-distance, visited-state alternate color path https://leetcode.com/problems/shortest-path-with-alternating-colors/solutions/7210961/cyclic-graph-visited-node-with-state-pat-3rzh/
+
+    graph_shortest_paths {
+        bellman-ford
+        dijkstra
+        floyd-warshall
+    }
+}
+
+tree {
+    tree = connected acyclic graph (n nodes, n-1 edges) with unique path b/w any two nodes.
+    each node has exactly 1parent except root.
+
+    traversals: DFS, BFS (simple: no cycles, not visitable by multiple nodes)
+    
+    tree diameter: (general tree - not necessarily two child)
+    diameter-1
+    diameter-2
+
+    binary tree: each node has 0,1,2 children
+    binary-tree-nodes-ordering: preorder(rab), inorder(arb), postorder(abr)
+
+    tree starters:
+    Mirror tree - https://leetcode.com/problems/symmetric-tree/solutions/7223683/mirror-tree-by-spnio-1915/
 }
 
 CSES Problems in Leetcode {
